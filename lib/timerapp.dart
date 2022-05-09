@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:timer/main.dart';
 
 class TimerApp extends StatelessWidget {
   const TimerApp({Key? key}) : super(key: key);
@@ -14,20 +15,23 @@ class TimerApp extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Center(
-              child: Text(
-            '00:00:00',
-            style: TextStyle(fontSize: 55),
-          )),
+          Center(child: CounterScreen()),
           SizedBox(
             height: 50,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              IconButton(onPressed: () {}, icon: Icon(Icons.restore_sharp)),
               IconButton(
-                  onPressed: () {}, icon: Icon(Icons.play_arrow_rounded)),
+                  onPressed: () {
+                    button = false;
+                  },
+                  icon: Icon(Icons.restore_sharp)),
+              IconButton(
+                  onPressed: () {
+                    button = true;
+                  },
+                  icon: Icon(Icons.play_arrow_rounded)),
             ],
           )
         ],

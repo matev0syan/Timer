@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:timer/timerapp.dart';
 
+bool button = false;
 const Color darkBlue = Color.fromARGB(255, 18, 32, 47);
 
 void main() {
@@ -83,9 +84,16 @@ class _CounterScreenState extends State<CounterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      "$hours :$minutes1 $minutes :$seconds1 $seconds",
-      style: TextStyle(fontSize: 40),
-    );
+    if (button == true) {
+      return Text(
+        "0$hours:$minutes1$minutes:$seconds1$seconds",
+        style: TextStyle(fontSize: 40),
+      );
+    } else {
+      return Text(
+        '00:00:00',
+        style: TextStyle(fontSize: 40),
+      );
+    }
   }
 }
