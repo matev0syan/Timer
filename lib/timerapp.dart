@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:timer/main.dart';
+import 'package:timer/wawe.dart';
+
+import 'components/time_buttons.dart';
+import 'components/timer.dart';
 
 class TimerApp extends StatelessWidget {
   const TimerApp({Key? key}) : super(key: key);
@@ -8,32 +12,24 @@ class TimerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 5, 72, 255),
-        title: Center(child: Text('Timer')),
-      ),
+      backgroundColor: Colors.black,
+      // appBar: AppBar(
+      //   backgroundColor: Color.fromARGB(255, 0, 0, 0),
+      //   title: Center(
+      //     child: Text(
+      //       'Timer',
+      //       style: TextStyle(color: Color.fromARGB(255, 31, 48, 236)),
+      //     ),
+      //   ),
+      // ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Center(child: CounterScreen()),
+          Timer(),
           SizedBox(
             height: 50,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              IconButton(
-                  onPressed: () {
-                    button = false;
-                  },
-                  icon: Icon(Icons.restore_sharp)),
-              IconButton(
-                  onPressed: () {
-                    button = true;
-                  },
-                  icon: Icon(Icons.play_arrow_rounded)),
-            ],
-          )
+          TimerButtons(),
         ],
       ),
     );
