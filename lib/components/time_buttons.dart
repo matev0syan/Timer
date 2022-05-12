@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/timer_bloc.dart';
 
@@ -7,31 +8,66 @@ class TimerButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        IconButton(
-          iconSize: 40,
-          onPressed: () {},
-          icon: const Icon(
-            Icons.restore_sharp,
-            color: Color.fromARGB(255, 31, 48, 236),
-          ),
-        ),
-        const SizedBox(
-          width: 50,
-        ),
-        IconButton(
-          iconSize: 40,
-          onPressed: () {
-            secondss++;
-          },
-          icon: const Icon(
-            Icons.play_arrow_rounded,
-            color: Color.fromARGB(255, 31, 48, 236),
-          ),
-        ),
-      ],
+    return BlocBuilder<TimerBloc, TimerState>(
+      builder: (context, state) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            if (state is TimerInitial) ...[
+              FloatingActionButton(
+                  backgroundColor: const Color.fromARGB(214, 65, 63, 63),
+                  child: const Icon(
+                    Icons.play_arrow,
+                    color: Color.fromARGB(255, 255, 255, 255),
+                  ),
+                  onPressed: () => context
+                      .read<TimerBloc>()
+                      .add(TimerStarted(state.duration))),
+            ] else if (state is TimerRunInProgress) ...[
+              FloatingActionButton(
+                  backgroundColor: const Color.fromARGB(255, 36, 36, 36),
+                  child: const Icon(
+                    Icons.pause,
+                    color: Color.fromARGB(255, 255, 255, 255),
+                  ),
+                  onPressed: () =>
+                      context.read<TimerBloc>().add(const TimerPaused())),
+              FloatingActionButton(
+                  backgroundColor: const Color.fromARGB(255, 36, 36, 36),
+                  child: const Icon(
+                    Icons.refresh,
+                    color: Color.fromARGB(255, 255, 255, 255),
+                  ),
+                  onPressed: () => context.read<TimerBloc>().add(TimerReset())),
+            ] else if (state is TimerRunPause) ...[
+              FloatingActionButton(
+                  backgroundColor: const Color.fromARGB(255, 36, 36, 36),
+                  child: const Icon(
+                    Icons.play_arrow,
+                    color: Color.fromARGB(255, 255, 255, 255),
+                  ),
+                  onPressed: () => context
+                      .read<TimerBloc>()
+                      .add(TimerResumed(state.duration))),
+              FloatingActionButton(
+                  backgroundColor: const Color.fromARGB(255, 36, 36, 36),
+                  child: const Icon(
+                    Icons.refresh,
+                    color: Color.fromARGB(255, 255, 255, 255),
+                  ),
+                  onPressed: () => context.read<TimerBloc>().add(TimerReset())),
+            ] else if (state is TimerRunComplete) ...[
+              FloatingActionButton(
+                  backgroundColor: const Color.fromARGB(255, 36, 36, 36),
+                  child: const Icon(
+                    Icons.refresh,
+                    color: Color.fromARGB(255, 203, 203, 210),
+                  ),
+                  onPressed: () => context.read<TimerBloc>().add(TimerReset()))
+            ],
+          ],
+        );
+      },
     );
   }
 }
